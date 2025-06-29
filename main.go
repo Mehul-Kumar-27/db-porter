@@ -1,10 +1,21 @@
 package main
 
 import (
+	"os"
+
 	_ "github.com/lib/pq"
+	"github.com/spf13/cobra"
 )
 
-// postgresql://postgres:postgres@127.0.0.1:5435/cms?statusColor=686B6F&env=&name=CMS%20LOCAL%20POSTGRES&tLSMode=0&usePrivateKey=false&safeModeLevel=0&advancedSafeModeLevel=0&driverVersion=0&lazyload=false
-func main() {
+var rootCmd = &cobra.Command{
+	Use:   "dbporter",
+	Short: "Db-Porter helps you to move data around various data source",
+	Run: func(cmd *cobra.Command, args []string) {
+	},
+}
 
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		os.Exit(1)
+	}
 }
