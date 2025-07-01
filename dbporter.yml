@@ -1,0 +1,23 @@
+source:
+  type: gsheet
+  env:
+    CLIENT_ID : GOOGLE_CLIENT_ID
+    CLIENT_SECRET : GOOGLE_CLIENT_SECRET
+  config:
+    sheet_id: ""
+    worksheets:
+      Products:
+        columns:
+          - name: product_id
+            type: string
+          - name: price
+            type: float
+
+destination:
+  type: postgres
+  env:
+    DB_HOST: DB_HOST
+    DB_PORT: DB_PORT
+    DB_DATABASE: DB_DATABASE
+    DB_USER: DB_USER
+    DB_PASSWORD: DB_PASSWORD

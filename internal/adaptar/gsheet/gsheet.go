@@ -21,6 +21,7 @@ type GsheetAdapter struct {
 	service         *sheets.Service
 	CredentialsPath string
 	logger          *log.Logger
+	Config          GsheetConfig
 }
 
 func (g *GsheetAdapter) initializeGsheetAdapter() error {
@@ -35,7 +36,7 @@ func (g *GsheetAdapter) initializeGsheetAdapter() error {
 }
 
 func NewGsheetAdapter(credentialsPath string) (*GsheetAdapter, error) {
-	l := log.New(nil)
+	l := log.New("GSHEET", nil)
 	client := &GsheetAdapter{
 		CredentialsPath: credentialsPath,
 		logger:          l,
@@ -47,4 +48,14 @@ func NewGsheetAdapter(credentialsPath string) (*GsheetAdapter, error) {
 	}
 
 	return client, nil
+}
+
+func (g *GsheetAdapter) GetData() error {
+	spreadsheet, err := g.service.Spreadsheets.Get(g.Config.SheetID).Do()
+	if err != nil {
+		return fmt.Errorf("error getting spreadsheet %s", err)
+	}
+
+	g.logger.Info("Spreadsheet retrieved successfully", "spreadsheet", spreadsheet)
+	return nil
 }
